@@ -5,8 +5,8 @@ from gui import Pygame
 import time
 
 
-response = requests.get("https://sugoku.herokuapp.com/board?difficulty=easy")
-board = np.array(response.json()['board'])
+# response = requests.get("https://sugoku.herokuapp.com/board?difficulty=easy")
+# board = np.array(response.json()['board'])
 
 
 class Sudoku:
@@ -39,26 +39,27 @@ class Sudoku:
             for num in range(1,10):
                 if self.is_valid(board, row, col, num): #explore
                     board[row][col] = num #choose
-                    time.sleep(0.1)
-                    self.gui.initialize(board)
+                    time.sleep(0.2)
+                    self.gui.display(board, row, col, False)
                     if self.solve(board, row, col+1):
                         return True
                     board[row][col] = 0 #"unchoose"
+                    self.gui.display(board, row, col, True)
             return False
 
 
 
-# board = np.array(
-#         [[7,8,0,4,0,0,1,2,0],
-#          [6,0,0,0,7,5,0,0,9],
-#          [0,0,0,6,0,1,0,7,8],
-#          [0,0,7,0,4,0,2,6,0],
-#          [0,0,1,0,5,0,9,3,0],
-#          [9,0,4,0,6,0,0,0,5],
-#          [0,7,0,3,0,0,0,1,2],
-#          [1,2,0,0,0,7,4,0,0],
-#          [0,4,9,2,0,6,0,0,7]]
-#          )
+board = np.array(
+        [[7,8,0,4,0,0,1,2,0],
+         [6,0,0,0,7,5,0,0,9],
+         [0,0,0,6,0,1,0,7,8],
+         [0,0,7,0,4,0,2,6,0],
+         [0,0,1,0,5,0,9,3,0],
+         [9,0,4,0,6,0,0,0,5],
+         [0,7,0,3,0,0,0,1,2],
+         [1,2,0,0,0,7,4,0,0],
+         [0,4,9,2,0,6,0,0,7]]
+         )
 
 def main():
     sudoku = Sudoku(board)
