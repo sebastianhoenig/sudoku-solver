@@ -11,14 +11,12 @@ class Pygame:
         self.font = pygame.font.SysFont('Arial', 35)
            
     def mainloop(self):
-        done = False
-        while not done:
+        while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.time(50)
-                    return
+                    return            
     
-    def display(self, board, giv_row, giv_col, remove):
+    def display(self, board, giv_row, giv_col, remove, finished):
         self.window = pygame.display.set_mode((650, 650))
         self.window.fill(self.white)
         pygame.display.set_caption("Sudoku Solver")
@@ -33,14 +31,15 @@ class Pygame:
                 if board[row][col] > 0:
                     value = self.font.render(str(board[row][col]), True, self.black)
                     self.window.blit(value, (115+col*50 , 105+row*50))
-        if remove:
-            col = self.red
-        else:
-            col = self.green
-        pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*giv_row), end_pos=(100+50*(giv_col+1), 100+50*giv_row), width=2)
-        pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*giv_row), end_pos=(100+50*giv_col, 100+50*(giv_row+1)), width=2)
-        pygame.draw.line(self.window, col, start_pos=(100+50*(giv_col+1), 100+50*giv_row), end_pos=(100+50*(giv_col+1), 100+50*(giv_row+1)), width=2)
-        pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*(giv_row+1)), end_pos=(100+50*(giv_col+1), 100+50*(giv_row+1)), width=2)
-        
+        if not finished:
+            if remove:
+                col = self.red
+            else:
+                col = self.green
+            pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*giv_row), end_pos=(100+50*(giv_col+1), 100+50*giv_row), width=2)
+            pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*giv_row), end_pos=(100+50*giv_col, 100+50*(giv_row+1)), width=2)
+            pygame.draw.line(self.window, col, start_pos=(100+50*(giv_col+1), 100+50*giv_row), end_pos=(100+50*(giv_col+1), 100+50*(giv_row+1)), width=2)
+            pygame.draw.line(self.window, col, start_pos=(100+50*giv_col, 100+50*(giv_row+1)), end_pos=(100+50*(giv_col+1), 100+50*(giv_row+1)), width=2)
         pygame.display.update()
-        
+
+    
